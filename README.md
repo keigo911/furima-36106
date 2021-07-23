@@ -44,7 +44,7 @@ has_one :buy
 
 ### Association
 belongs_to :user
-has_many :item
+belongs_to :item
 has_one :address
 
 
@@ -52,7 +52,7 @@ has_one :address
 
 | Column         | Type       | Options                        |
 | -------------- | ---------- | ------------------------------ |
-| postal_code_id | string     | null: false                    |
+| postal_code | string     | null: false                    |
 | prefecture_id  | integer    | null: false                    |
 | city           | string     | null: false                    |
 | address        | string     | null: false                    |
