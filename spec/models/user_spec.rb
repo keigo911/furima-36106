@@ -65,14 +65,14 @@ RSpec.describe User, type: :model do
     end
 
     it 'passwordが6文字以上であれば登録できること' do
-      @user.password = '123456'
-      @user.password_confirmation = '123456'
+      @user.password = 'abc123'
+      @user.password_confirmation = 'abc123'
       expect(@user).to be_valid
     end
 
     it 'passwordが5文字以下であれば登録できないこと' do
-      @user.password = '12345'
-      @user.password_confirmation = '12345'
+      @user.password = 'abc12'
+      @user.password_confirmation = 'abc12'
       @user.valid?
       expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
     end
@@ -111,6 +111,69 @@ RSpec.describe User, type: :model do
 
     it 'first_name_kanaが全角カタカナでなければ登録できないこと' do
       @user.first_name_kana = 'あいうえお'
+      @user.valid?
+      expect(@user.errors.full_messages).to include('First name kana is invalid')
+    end
+
+    it 'passwordが英語のみであれば登録できないこと' do
+      @user.password = 'abcdef'
+      @user.password_confirmation = 'abcdef'
+      @user.valid?
+      expect(@user.errors.full_messages).to include('Password is invalid')
+    end
+
+    it 'passwordが数字のみであれば登録できないこと' do
+      @user.password = '123456'
+      @user.password_confirmation = '123456'
+      @user.valid?
+      expect(@user.errors.full_messages).to include('Password is invalid')
+    end
+
+    it 'passwordが全角であれば登録できないこと' do
+      @user.password = 'ａｂｃ１２３'
+      @user.password_confirmation = 'ａｂｃ１２３'
+      @user.valid?
+      expect(@user.errors.full_messages).to include('Password is invalid')
+    end
+
+    it 'emailに@が含まれていない場合は登録できないこと' do
+      @user.email = 'test.gmail.com'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Email is invalid")
+    end
+
+    it 'last_nameが英語では登録できないこと' do
+      @user.last_name = 'yamada'
+      @user.valid?
+      expect(@user.errors.full_messages).to include('Last name is invalid')
+    end
+
+    it 'first_nameが英語では登録できないこと' do
+      @user.first_name = 'tarou'
+      @user.valid?
+      expect(@user.errors.full_messages).to include('First name is invalid')
+    end
+
+    it 'last_name_kanaが英語では登録できないこと' do
+      @user.last_name_kana = 'yamda'
+      @user.valid?
+      expect(@user.errors.full_messages).to include('Last name kana is invalid')
+    end
+
+    it 'first_name_kanaが英語では登録できないこと' do
+      @user.first_name_kana = 'tarou'
+      @user.valid?
+      expect(@user.errors.full_messages).to include('First name kana is invalid')
+    end
+
+    it 'last_name_kanaが漢字では登録できないこと' do
+      @user.last_name_kana = '山田'
+      @user.valid?
+      expect(@user.errors.full_messages).to include('Last name kana is invalid')
+    end
+
+    it 'first_name_kanaが漢字では登録できないこと' do
+      @user.first_name_kana = '太郎'
       @user.valid?
       expect(@user.errors.full_messages).to include('First name kana is invalid')
     end
