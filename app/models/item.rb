@@ -18,7 +18,7 @@ class Item < ApplicationRecord
     validates :products_description
     validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 },
                       format: { with: VALID_PRICE_REGEX }
-    with_options numericality: { other_than: 1 } do
+    with_options numericality: { other_than: 1, message: "can't be blank" } do
       validates :category_id
       validates :status_id
       validates :fee_burden_id
