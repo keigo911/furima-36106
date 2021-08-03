@@ -28,31 +28,31 @@ RSpec.describe Item, type: :model do
       it 'カテゴリーがなければ登録できない' do
         @item.category_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Category can't be blank", "Category can't be blank")
+        expect(@item.errors.full_messages).to include("Category can't be blank")
       end
 
       it '商品の状態がなければ登録できない' do
         @item.status_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Status can't be blank", "Status can't be blank")
+        expect(@item.errors.full_messages).to include("Status can't be blank")
       end
 
       it '配送料の負担がなければ登録できない' do
         @item.fee_burden_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Fee burden can't be blank", "Fee burden can't be blank")
+        expect(@item.errors.full_messages).to include("Fee burden can't be blank")
       end
 
       it '発送元の地域がなければ登録できない' do
         @item.prefecture_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Prefecture can't be blank", "Prefecture can't be blank")
+        expect(@item.errors.full_messages).to include("Prefecture can't be blank")
       end
 
       it '発送までの日数がなければ登録できない' do
         @item.delivery_time_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Delivery time can't be blank", "Delivery time can't be blank")
+        expect(@item.errors.full_messages).to include("Delivery time can't be blank")
       end
 
       it '価格がなければ登録できない' do
@@ -68,7 +68,7 @@ RSpec.describe Item, type: :model do
       end
 
       it '価格は10000000以上では登録できない' do
-        @item.price = 10000000
+        @item.price = 10_000_000
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
       end
@@ -132,7 +132,6 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is not a number')
       end
-
     end
   end
 end
