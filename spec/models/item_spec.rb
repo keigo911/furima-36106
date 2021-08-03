@@ -62,13 +62,13 @@ RSpec.describe Item, type: :model do
       end
 
       it '価格は299以下では登録できない' do
-        @item.price = '299'
+        @item.price = 299
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
       end
 
       it '価格は10000000以上では登録できない' do
-        @item.price = '10000000'
+        @item.price = 10000000
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
       end
@@ -90,6 +90,49 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include('User must exist')
       end
+
+      it 'カテゴリーで１(--）を選択した場合登録できない' do
+        @item.category_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category can't be blank")
+      end
+
+      it '商品の状態で１(--）を選択した場合登録できない' do
+        @item.status_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Status can't be blank")
+      end
+
+      it '配送料の負担で１(--）を選択した場合登録できない' do
+        @item.fee_burden_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Fee burden can't be blank")
+      end
+
+      it '発送元の地域で１(--）を選択した場合登録できない' do
+        @item.prefecture_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Prefecture can't be blank")
+      end
+
+      it '発送までの日数で１(--）を選択した場合登録できない' do
+        @item.delivery_time_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Delivery time can't be blank")
+      end
+
+      it '価格は半角英数混合では登録できない' do
+        @item.price = '1000jpy'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is not a number')
+      end
+
+      it '価格は半角英語だけでは登録できない' do
+        @item.price = 'thousand'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is not a number')
+      end
+
     end
   end
 end
