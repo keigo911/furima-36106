@@ -16,7 +16,8 @@ class Item < ApplicationRecord
     validates :image
     validates :products
     validates :products_description
-    validates :price, numericality: {greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999}, format: { with: VALID_PRICE_REGEX }
+    validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 },
+                      format: { with: VALID_PRICE_REGEX }
     with_options numericality: { other_than: 1 } do
       validates :category_id
       validates :status_id

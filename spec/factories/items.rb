@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :item do
-    products {'画像'}
-    products_description {Faker::Lorem.sentence}
+    products { '画像' }
+    products_description { Faker::Lorem.sentence }
     category_id { '2' }
     status_id { '2' }
     fee_burden_id { '2' }
